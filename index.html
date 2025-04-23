@@ -64,5 +64,23 @@
     <button id="btn-adicionar">Adicionar</button>
 
     <ul id="lista-compras"></ul>
+
+    <script>
+      const input = document.querySelector("#input-item");
+      const botao = document.querySelector("#btn-adicionar");
+      const lista = document.querySelector("#lista-compras");
+
+      botao.addEventListener("click", () => {
+        const texto = input.value.trim();
+
+        if (texto !== "") {
+          const novoItem = document.createElement("li");
+          novoItem.textContent = texto;
+          lista.appendChild(novoItem);
+          input.value = "";
+          input.focus();
+        }
+      });
+    </script>
   </body>
 </html>
