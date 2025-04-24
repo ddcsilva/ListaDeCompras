@@ -102,6 +102,22 @@
       .btn-remover:hover {
         color: #dc3545;
       }
+
+      .btn-limpar {
+        margin-top: 10px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .btn-limpar:hover {
+        background-color: #a71d2a;
+      }
     </style>
   </head>
   <body>
@@ -109,9 +125,11 @@
 
     <input type="text" placeholder="Digite um item..." id="input-item" />
 
-    <button id="btn-adicionar">Adicionar</button>
+    <button id="btn-adicionar" class="btn-adicionar">Adicionar</button>
 
     <ul id="lista-compras"></ul>
+
+    <button id="btn-limpar" class="btn-limpar">Limpar Tudo</button>
 
     <script>
       const input = document.querySelector("#input-item");
@@ -143,6 +161,13 @@
           input.value = "";
           input.focus();
         }
+      });
+
+      const botaoLimpar = document.querySelector("#btn-limpar");
+
+      botaoLimpar.addEventListener("click", () => {
+        lista.innerHTML = "";
+        localStorage.removeItem("listaDeCompras");
       });
 
       input.addEventListener("keydown", (evento) => {
