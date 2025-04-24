@@ -38,7 +38,6 @@
         font-size: 16px;
         border-radius: 6px;
         cursor: pointer;
-        margin-top: 10px;
       }
 
       input:hover {
@@ -59,12 +58,13 @@
         list-style: none;
         padding: 0;
         margin-top: 20px;
-        width: 250px;
+        width: 100%;
+        max-width: 400px;
       }
 
       ul li {
         background-color: white;
-        padding: 10px;
+        padding: 12px 16px;
         margin-bottom: 10px;
         border-radius: 6px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -72,22 +72,35 @@
         color: #333;
         font-size: 16px;
         display: flex;
-        justify-content: space-between;
+        flex-direction: row;
         align-items: center;
+        justify-content: space-between;
       }
 
-      .remover {
+      ul li span {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      .btn-adicionar {
+        margin-top: 10px;
+      }
+
+      .btn-remover {
         background-color: transparent;
         border: none;
         color: #888;
         font-size: 18px;
+        padding: 4px 8px;
+        border-radius: 4px;
         cursor: pointer;
-        margin-left: 10px;
-        padding: 0;
+        transition: color 0.2s ease;
       }
 
-      .remover:hover {
-        color: #e63946;
+      .btn-remover:hover {
+        color: #dc3545;
       }
     </style>
   </head>
@@ -110,22 +123,60 @@
 
         if (texto !== "") {
           const novoItem = document.createElement("li");
-          novoItem.textContent = texto;
+          const spanTexto = document.createElement("span");
+          spanTexto.textContent = texto;
 
-          const botaoRemover = document.createElement("button");
-          botaoRemover.textContent = "❌";
-          botaoRemover.classList.add("remover");
+          const btnRemover = document.createElement("button");
+          btnRemover.textContent = "✖";
+          btnRemover.classList.add("btn-remover");
 
-          botaoRemover.addEventListener("click", () => {
-            novoItem.remove();
+          btnRemover.addEventListener("click", () => {
+            lista.removeChild(novoItem);
+            salvarLista();
           });
 
-          novoItem.appendChild(botaoRemover);
-
+          novoItem.appendChild(spanTexto);
+          novoItem.appendChild(btnRemover);
           lista.appendChild(novoItem);
+          salvarLista();
+
           input.value = "";
           input.focus();
         }
+      });
+
+      function salvarLista() {
+        const itens = [];
+        const itensDOM = document.querySelectorAll("#lista-compras li span");
+
+        itensDOM.forEach((span) => {
+          itens.push(span.textContent);
+        });
+
+        localStorage.setItem("listaDeCompras", JSON.stringify(itens));
+      }
+
+      window.addEventListener("load", () => {
+        const itensSalvos = JSON.parse(localStorage.getItem("listaDeCompras")) || [];
+
+        itensSalvos.forEach((texto) => {
+          const novoItem = document.createElement("li");
+          const spanTexto = document.createElement("span");
+          spanTexto.textContent = texto;
+
+          const btnRemover = document.createElement("button");
+          btnRemover.textContent = "✖";
+          btnRemover.classList.add("btn-remover");
+
+          btnRemover.addEventListener("click", () => {
+            lista.removeChild(novoItem);
+            salvarLista();
+          });
+
+          novoItem.appendChild(spanTexto);
+          novoItem.appendChild(btnRemover);
+          lista.appendChild(novoItem);
+        });
       });
     </script>
   </body>
