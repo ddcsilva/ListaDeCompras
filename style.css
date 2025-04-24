@@ -1,77 +1,180 @@
+/* ===== VARIÁVEIS ===== */
+:root {
+  /* Cores */
+  --cor-primaria: #007bff;
+  --cor-secundaria: #0056b3;
+  --cor-perigo: #dc3545;
+  --cor-perigo-hover: #a71d2a;
+  --cor-sucesso: #28a745;
+  --cor-texto: #333;
+  --cor-fundo: #f4f4f4;
+  --cor-borda: #ccc;
+  --cor-sombra: rgba(0, 0, 0, 0.1);
+  
+  /* Espaçamentos */
+  --espacamento-pequeno: 10px;
+  --espacamento-medio: 20px;
+  --espacamento-grande: 30px;
+  
+  /* Bordas */
+  --raio-borda: 6px;
+  --raio-borda-pequeno: 4px;
+  
+  /* Transições */
+  --velocidade-transicao: 0.2s;
+  
+  /* Tamanhos */
+  --largura-maxima: 400px;
+  --altura-botao: 40px;
+}
+
+/* ===== RESET E ESTILOS BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #f4f4f4;
+  background-color: var(--cor-fundo);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  padding: var(--espacamento-medio);
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.container-principal {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0;
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
 }
 
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  margin-bottom: var(--espacamento-medio);
+  text-align: center;
+}
+
+.titulo-principal {
+  color: var(--cor-texto);
   font-size: 32px;
+  font-weight: 600;
 }
 
-input {
-  padding: 10px;
+/* ===== SEÇÃO DE ADIÇÃO ===== */
+.secao-adicionar {
+  width: 100%;
+  margin-bottom: var(--espacamento-medio);
+}
+
+.container-input {
+  display: flex;
+  gap: var(--espacamento-pequeno);
+  flex-wrap: wrap;
+}
+
+.campo-texto {
+  padding: var(--espacamento-pequeno);
   font-size: 16px;
-  width: 250px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  transition: border-color var(--velocidade-transicao) ease;
 }
 
-input:hover {
+.campo-texto:hover {
   border-color: #888;
 }
 
-input:focus {
+.campo-texto:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px #007bff55;
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-button {
-  background-color: #007bff;
+/* ===== BOTÕES ===== */
+.botao {
+  background-color: var(--cor-primaria);
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: var(--espacamento-pequeno) 16px;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: var(--raio-borda);
   cursor: pointer;
+  transition: background-color var(--velocidade-transicao) ease;
+  height: var(--altura-botao);
 }
 
-button:hover {
-  background-color: #0056b3;
+.botao:hover {
+  background-color: var(--cor-secundaria);
 }
 
-ul {
+.botao-adicionar {
+  margin-top: var(--espacamento-pequeno);
+}
+
+.botao-limpar {
+  background-color: var(--cor-perigo);
+  margin-top: var(--espacamento-medio);
+  display: none;
+}
+
+.botao-limpar:hover {
+  background-color: var(--cor-perigo-hover);
+}
+
+.botao-remover {
+  background-color: transparent;
+  border: none;
+  color: #888;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: var(--raio-borda-pequeno);
+  cursor: pointer;
+  transition: color var(--velocidade-transicao) ease;
+}
+
+.botao-remover:hover {
+  color: var(--cor-perigo);
+}
+
+/* ===== LISTA DE ITENS ===== */
+.secao-lista {
+  width: 100%;
+}
+
+.lista-itens {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
+  margin-top: var(--espacamento-medio);
   width: 100%;
-  max-width: 400px;
 }
 
-ul li {
+.lista-itens__item {
   background-color: white;
   padding: 12px 16px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  margin-bottom: var(--espacamento-pequeno);
+  border-radius: var(--raio-borda);
+  box-shadow: 0 2px 5px var(--cor-sombra);
+  color: var(--cor-texto);
   font-size: 16px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  transition: transform var(--velocidade-transicao) ease, 
+              box-shadow var(--velocidade-transicao) ease;
 }
 
-ul li span {
+.lista-itens__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--cor-sombra);
+}
+
+.lista-itens__texto {
   flex: 1;
   display: flex;
   align-items: center;
@@ -81,38 +184,87 @@ ul li span {
   text-overflow: ellipsis;
 }
 
-.btn-adicionar {
-  margin-top: 10px;
-}
-
-.btn-remover {
-  background-color: transparent;
-  border: none;
-  color: #888;
-  font-size: 18px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.btn-remover:hover {
-  color: #dc3545;
-}
-
-.btn-limpar {
-  margin-top: 20px;
-  background-color: #dc3545;
+/* ===== NOTIFICAÇÕES ===== */
+.notificacao {
+  position: fixed;
+  top: var(--espacamento-medio);
+  right: var(--espacamento-medio);
+  padding: 12px 20px;
+  border-radius: var(--raio-borda);
   color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  display: none;
+  font-weight: 500;
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+  z-index: 1000;
 }
 
-.btn-limpar:hover {
-  background-color: #a71d2a;
+.notificacao--sucesso {
+  background-color: var(--cor-sucesso);
+}
+
+.notificacao--erro {
+  background-color: var(--cor-perigo);
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.item-adicionado {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== UTILITÁRIOS ===== */
+.rotulo-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 480px) {
+  .titulo-principal {
+    font-size: 24px;
+  }
+
+  .container-input {
+    flex-direction: column;
+  }
+
+  .campo-texto,
+  .botao {
+    width: 100%;
+  }
 }
