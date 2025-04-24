@@ -145,6 +145,12 @@
         }
       });
 
+      input.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter") {
+          botao.click();
+        }
+      });
+
       function salvarLista() {
         const itens = [];
         const itensDOM = document.querySelectorAll("#lista-compras li span");
