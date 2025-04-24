@@ -15,14 +15,28 @@
 
       <section class="secao-adicionar">
         <div class="container-input">
-          <label for="input-item" class="rotulo-oculto">Adicionar item à lista</label>
-          <input 
-            type="text" 
-            placeholder="Digite um item..." 
-            id="input-item" 
-            class="campo-texto"
-            aria-label="Digite um item para adicionar à lista" 
-          />
+          <div class="grupo-input">
+            <label for="input-item" class="rotulo-oculto">Adicionar item à lista</label>
+            <input 
+              type="text" 
+              placeholder="Digite um item..." 
+              id="input-item" 
+              class="campo-texto"
+              aria-label="Digite um item para adicionar à lista" 
+            />
+          </div>
+          <div class="grupo-input grupo-input--quantidade">
+            <label for="input-quantidade" class="rotulo-oculto">Quantidade</label>
+            <input 
+              type="number" 
+              placeholder="Qtd" 
+              id="input-quantidade" 
+              class="campo-texto campo-texto--quantidade"
+              min="1"
+              value="1"
+              aria-label="Quantidade do item" 
+            />
+          </div>
           <button 
             id="btn-adicionar" 
             class="botao botao-adicionar" 

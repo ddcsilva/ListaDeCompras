@@ -8,6 +8,7 @@ const CONSTANTES = {
 // ===== SELEÇÃO DE ELEMENTOS =====
 const elementos = {
   input: document.querySelector("#input-item"),
+  inputQuantidade: document.querySelector("#input-quantidade"),
   botaoAdicionar: document.querySelector("#btn-adicionar"),
   lista: document.querySelector("#lista-compras"),
   botaoLimpar: document.querySelector("#btn-limpar")
@@ -38,6 +39,15 @@ const Validacao = {
       return false;
     }
     return true;
+  },
+
+  quantidade(quantidade) {
+    const num = parseInt(quantidade);
+    if (isNaN(num) || num < 1) {
+      Notificacao.mostrar("A quantidade deve ser um número maior que zero", "erro");
+      return false;
+    }
+    return true;
   }
 };
 
@@ -45,8 +55,12 @@ const Validacao = {
 const Armazenamento = {
   salvar() {
     try {
-      const itens = Array.from(elementos.lista.querySelectorAll("li span")).map(
-        (span) => span.textContent
+      const itens = Array.from(elementos.lista.querySelectorAll(".lista-itens__item")).map(
+        (item) => ({
+          texto: item.querySelector(".lista-itens__texto").textContent,
+          quantidade: item.querySelector(".lista-itens__quantidade").textContent,
+          comprado: item.classList.contains("lista-itens__item--comprado")
+        })
       );
       localStorage.setItem(CONSTANTES.CHAVE_LOCAL_STORAGE, JSON.stringify(itens));
       elementos.botaoLimpar.style.display = elementos.lista.children.length > 0 ? "block" : "none";
@@ -74,29 +88,51 @@ const Armazenamento = {
 
 // ===== GERENCIAMENTO DE ITENS =====
 const GerenciadorItens = {
-  criar(texto) {
+  criar(texto, quantidade, comprado = false) {
     const item = document.createElement("li");
-    item.className = "lista-itens__item item-adicionado";
+    item.className = `lista-itens__item ${comprado ? "lista-itens__item--comprado" : ""}`;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "lista-itens__checkbox";
+    checkbox.checked = comprado;
+    checkbox.setAttribute("aria-label", `Marcar ${texto} como comprado`);
+
+    const conteudo = document.createElement("div");
+    conteudo.className = "lista-itens__conteudo";
 
     const textoItem = document.createElement("span");
     textoItem.className = "lista-itens__texto";
     textoItem.textContent = texto;
+
+    const quantidadeSpan = document.createElement("span");
+    quantidadeSpan.className = "lista-itens__quantidade";
+    quantidadeSpan.textContent = quantidade;
 
     const botaoRemover = document.createElement("button");
     botaoRemover.className = "botao botao-remover";
     botaoRemover.textContent = "✖";
     botaoRemover.setAttribute("aria-label", `Remover ${texto}`);
 
-    item.appendChild(textoItem);
+    conteudo.appendChild(textoItem);
+    conteudo.appendChild(quantidadeSpan);
+
+    item.appendChild(checkbox);
+    item.appendChild(conteudo);
     item.appendChild(botaoRemover);
 
-    return { elemento: item, botaoRemover };
+    return { elemento: item, checkbox, botaoRemover };
   },
 
-  adicionar(texto) {
-    if (!Validacao.item(texto)) return;
+  adicionar(texto, quantidade, comprado = false) {
+    if (!Validacao.item(texto) || !Validacao.quantidade(quantidade)) return;
 
-    const { elemento, botaoRemover } = this.criar(texto);
+    const { elemento, checkbox, botaoRemover } = this.criar(texto, quantidade, comprado);
+
+    checkbox.addEventListener("change", () => {
+      elemento.classList.toggle("lista-itens__item--comprado", checkbox.checked);
+      Armazenamento.salvar();
+    });
 
     botaoRemover.addEventListener("click", () => {
       elementos.lista.removeChild(elemento);
@@ -126,15 +162,19 @@ const Eventos = {
   inicializar() {
     elementos.botaoAdicionar.addEventListener("click", () => this.adicionarItem());
     elementos.input.addEventListener("keydown", (evento) => this.teclaEnter(evento));
+    elementos.inputQuantidade.addEventListener("keydown", (evento) => this.teclaEnter(evento));
     elementos.botaoLimpar.addEventListener("click", GerenciadorItens.limpar);
-    window.addEventListener("load", this.carregarLista);
+    window.addEventListener("load", () => this.carregarLista());
   },
 
   adicionarItem() {
     const texto = elementos.input.value.trim();
+    const quantidade = elementos.inputQuantidade.value;
+    
     if (texto !== "") {
-      GerenciadorItens.adicionar(texto);
+      GerenciadorItens.adicionar(texto, quantidade);
       elementos.input.value = "";
+      elementos.inputQuantidade.value = "1";
       elementos.input.focus();
     }
   },
@@ -148,8 +188,8 @@ const Eventos = {
 
   carregarLista() {
     const itensSalvos = Armazenamento.carregar();
-    itensSalvos.forEach((texto) => {
-      GerenciadorItens.adicionar(texto);
+    itensSalvos.forEach((item) => {
+      GerenciadorItens.adicionar(item.texto, item.quantidade, item.comprado);
     });
   }
 };
