@@ -124,8 +124,8 @@ const GerenciadorItens = {
 // ===== GERENCIAMENTO DE EVENTOS =====
 const Eventos = {
   inicializar() {
-    elementos.botaoAdicionar.addEventListener("click", this.adicionarItem);
-    elementos.input.addEventListener("keydown", this.teclaEnter);
+    elementos.botaoAdicionar.addEventListener("click", () => this.adicionarItem());
+    elementos.input.addEventListener("keydown", (evento) => this.teclaEnter(evento));
     elementos.botaoLimpar.addEventListener("click", GerenciadorItens.limpar);
     window.addEventListener("load", this.carregarLista);
   },
@@ -141,6 +141,7 @@ const Eventos = {
 
   teclaEnter(evento) {
     if (evento.key === "Enter") {
+      evento.preventDefault();
       this.adicionarItem();
     }
   },
