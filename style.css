@@ -24,8 +24,8 @@
   --velocidade-transicao: 0.2s;
   
   /* Tamanhos */
-  --largura-maxima: 400px;
-  --altura-botao: 40px;
+  --largura-maxima: 600px;
+  --altura-input: 45px;
 }
 
 /* ===== RESET E ESTILOS BASE ===== */
@@ -39,23 +39,25 @@ body {
   background-color: var(--cor-fundo);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: var(--espacamento-medio);
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
 .container-principal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   max-width: var(--largura-maxima);
-  margin: 0 auto;
+  background-color: white;
+  padding: var(--espacamento-grande);
+  border-radius: var(--raio-borda);
+  box-shadow: 0 2px 10px var(--cor-sombra);
 }
 
 /* ===== CABEÇALHO ===== */
 .cabecalho {
-  margin-bottom: var(--espacamento-medio);
+  margin-bottom: var(--espacamento-grande);
   text-align: center;
 }
 
@@ -63,6 +65,9 @@ body {
   color: var(--cor-texto);
   font-size: 32px;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ===== SEÇÃO DE ADIÇÃO ===== */
@@ -74,13 +79,14 @@ body {
 .container-input {
   display: flex;
   gap: var(--espacamento-pequeno);
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .campo-texto {
-  padding: var(--espacamento-pequeno);
+  flex: 1;
+  height: var(--altura-input);
+  padding: 0 var(--espacamento-medio);
   font-size: 16px;
-  width: 100%;
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
   transition: border-color var(--velocidade-transicao) ease;
@@ -101,26 +107,24 @@ body {
   background-color: var(--cor-primaria);
   color: white;
   border: none;
-  padding: var(--espacamento-pequeno) 16px;
+  height: var(--altura-input);
+  padding: 0 var(--espacamento-grande);
   font-size: 16px;
   border-radius: var(--raio-borda);
   cursor: pointer;
   transition: background-color var(--velocidade-transicao) ease;
-  height: var(--altura-botao);
+  white-space: nowrap;
 }
 
 .botao:hover {
   background-color: var(--cor-secundaria);
 }
 
-.botao-adicionar {
-  margin-top: var(--espacamento-pequeno);
-}
-
 .botao-limpar {
   background-color: var(--cor-perigo);
   margin-top: var(--espacamento-medio);
   display: none;
+  width: 100%;
 }
 
 .botao-limpar:hover {
@@ -136,6 +140,7 @@ body {
   border-radius: var(--raio-borda-pequeno);
   cursor: pointer;
   transition: color var(--velocidade-transicao) ease;
+  height: auto;
 }
 
 .botao-remover:hover {
@@ -155,11 +160,11 @@ body {
 }
 
 .lista-itens__item {
-  background-color: white;
-  padding: 12px 16px;
+  background-color: var(--cor-fundo);
+  height: var(--altura-input);
+  padding: 0 var(--espacamento-medio);
   margin-bottom: var(--espacamento-pequeno);
   border-radius: var(--raio-borda);
-  box-shadow: 0 2px 5px var(--cor-sombra);
   color: var(--cor-texto);
   font-size: 16px;
   display: flex;
