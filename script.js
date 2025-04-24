@@ -2,7 +2,7 @@
 const CONSTANTES = {
   TAMANHO_MAXIMO_ITEM: 50,
   TEMPO_NOTIFICACAO: 3000,
-  CHAVE_LOCAL_STORAGE: "listaDeCompras"
+  CHAVE_LOCAL_STORAGE: "listaDeCompras",
 };
 
 // ===== SELEÇÃO DE ELEMENTOS =====
@@ -11,7 +11,7 @@ const elementos = {
   inputQuantidade: document.querySelector("#input-quantidade"),
   botaoAdicionar: document.querySelector("#btn-adicionar"),
   lista: document.querySelector("#lista-compras"),
-  botaoLimpar: document.querySelector("#btn-limpar")
+  botaoLimpar: document.querySelector("#btn-limpar"),
 };
 
 // ===== GERENCIAMENTO DE NOTIFICAÇÕES =====
@@ -25,17 +25,14 @@ const Notificacao = {
     setTimeout(() => {
       notificacao.remove();
     }, CONSTANTES.TEMPO_NOTIFICACAO);
-  }
+  },
 };
 
 // ===== VALIDAÇÃO =====
 const Validacao = {
   item(texto) {
     if (texto.length > CONSTANTES.TAMANHO_MAXIMO_ITEM) {
-      Notificacao.mostrar(
-        `O item não pode ter mais de ${CONSTANTES.TAMANHO_MAXIMO_ITEM} caracteres`,
-        "erro"
-      );
+      Notificacao.mostrar(`O item não pode ter mais de ${CONSTANTES.TAMANHO_MAXIMO_ITEM} caracteres`, "erro");
       return false;
     }
     return true;
@@ -43,25 +40,23 @@ const Validacao = {
 
   quantidade(quantidade) {
     const num = parseInt(quantidade);
-    if (isNaN(num) || num < 1) {
-      Notificacao.mostrar("A quantidade deve ser um número maior que zero", "erro");
+    if (isNaN(num) || num < 1 || num > 99) {
+      Notificacao.mostrar("A quantidade deve ser um número entre 1 e 99", "erro");
       return false;
     }
     return true;
-  }
+  },
 };
 
 // ===== GERENCIAMENTO DE ARMAZENAMENTO =====
 const Armazenamento = {
   salvar() {
     try {
-      const itens = Array.from(elementos.lista.querySelectorAll(".lista-itens__item")).map(
-        (item) => ({
-          texto: item.querySelector(".lista-itens__texto").textContent,
-          quantidade: item.querySelector(".lista-itens__quantidade").textContent,
-          comprado: item.classList.contains("lista-itens__item--comprado")
-        })
-      );
+      const itens = Array.from(elementos.lista.querySelectorAll(".lista-itens__item")).map((item) => ({
+        texto: item.querySelector(".lista-itens__texto").textContent,
+        quantidade: item.querySelector(".lista-itens__quantidade").textContent,
+        comprado: item.classList.contains("lista-itens__item--comprado"),
+      }));
       localStorage.setItem(CONSTANTES.CHAVE_LOCAL_STORAGE, JSON.stringify(itens));
       elementos.botaoLimpar.style.display = elementos.lista.children.length > 0 ? "block" : "none";
     } catch (erro) {
@@ -83,7 +78,7 @@ const Armazenamento = {
 
   limpar() {
     localStorage.removeItem(CONSTANTES.CHAVE_LOCAL_STORAGE);
-  }
+  },
 };
 
 // ===== GERENCIAMENTO DE ITENS =====
@@ -154,7 +149,7 @@ const GerenciadorItens = {
         Notificacao.mostrar("Lista limpa com sucesso");
       }
     }
-  }
+  },
 };
 
 // ===== GERENCIAMENTO DE EVENTOS =====
@@ -170,7 +165,7 @@ const Eventos = {
   adicionarItem() {
     const texto = elementos.input.value.trim();
     const quantidade = elementos.inputQuantidade.value;
-    
+
     if (texto !== "") {
       GerenciadorItens.adicionar(texto, quantidade);
       elementos.input.value = "";
@@ -191,7 +186,9 @@ const Eventos = {
     itensSalvos.forEach((item) => {
       GerenciadorItens.adicionar(item.texto, item.quantidade, item.comprado);
     });
-  }
+
+    elementos.input.focus();
+  },
 };
 
 // ===== INICIALIZAÇÃO =====
