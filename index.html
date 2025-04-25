@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Lista de compras pessoal para organizar suas compras do dia a dia" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Lista de Compras</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=1.0.0" />
     <link rel="icon" href="favicon.png" type="image/png" />
   </head>
   <body>
@@ -89,6 +92,18 @@
       <button id="btn-topo" class="botao botao-topo" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+      // Adiciona timestamp para evitar cache
+      document.addEventListener('DOMContentLoaded', function() {
+        const timestamp = new Date().getTime();
+        const links = document.querySelectorAll('link[rel="stylesheet"], script[src]');
+        links.forEach(link => {
+          const url = new URL(link.href || link.src);
+          url.searchParams.set('v', timestamp);
+          link.href = url.toString();
+        });
+      });
+    </script>
+    <script src="script.js?v=1.0.0"></script>
   </body>
 </html>
