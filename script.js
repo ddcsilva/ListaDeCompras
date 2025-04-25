@@ -144,6 +144,15 @@ const GerenciadorItens = {
   adicionar(texto, quantidade, comprado = false) {
     if (!Validacao.item(texto) || !Validacao.quantidade(quantidade)) return;
 
+    // Verifica se o item já existe na lista (ignorando maiúsculas/minúsculas)
+    const itemExistente = Array.from(elementos.lista.querySelectorAll('.lista-itens__texto'))
+      .some(item => item.textContent.toLowerCase() === texto.toLowerCase());
+
+    if (itemExistente) {
+      Notificacao.mostrar("Este item já está na lista!", "erro");
+      return;
+    }
+
     const { elemento, checkbox, botaoRemover } = this.criar(texto, quantidade, comprado);
 
     checkbox.addEventListener("change", () => {
