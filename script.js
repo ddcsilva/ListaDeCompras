@@ -3,8 +3,9 @@ const CONSTANTES = {
   TAMANHO_MAXIMO_ITEM: 50,
   TEMPO_NOTIFICACAO: 3000,
   CHAVE_LOCAL_STORAGE: "listaDeCompras",
-  LIMITE_SCROLL: 300, // Distância em pixels para mostrar o botão
   CHAVE_TEMA: "temaListaCompras",
+  CHAVE_NOME_USUARIO: "nomeUsuarioListaCompras",
+  LIMITE_SCROLL: 300,
 };
 
 // ===== SELEÇÃO DE ELEMENTOS =====
@@ -19,6 +20,11 @@ const elementos = {
   botaoTopo: document.querySelector("#btn-topo"),
   botaoTema: document.querySelector("#btn-tema"),
   iconeTema: document.querySelector("#icone-tema"),
+  modal: document.querySelector("#modal-nome"),
+  inputNome: document.querySelector("#input-nome"),
+  botaoSalvarNome: document.querySelector("#btn-salvar-nome"),
+  nomeUsuario: document.querySelector("#nome-usuario"),
+  botaoEditarNome: document.querySelector("#btn-editar-nome"),
 };
 
 // ===== GERENCIAMENTO DE NOTIFICAÇÕES =====
@@ -193,6 +199,70 @@ const GerenciadorTema = {
   },
 };
 
+// ===== GERENCIAMENTO DE NOME DO USUÁRIO =====
+const GerenciadorNome = {
+  nomeAtual: localStorage.getItem(CONSTANTES.CHAVE_NOME_USUARIO) || "",
+
+  capitalizar(nome) {
+    return nome
+      .trim()
+      .toLowerCase()
+      .replace(/(?:^|\s)\S/g, (letra) => letra.toUpperCase());
+  },
+
+  salvar(nome) {
+    if (!nome.trim()) return false;
+    
+    const nomeCapitalizado = this.capitalizar(nome);
+    this.nomeAtual = nomeCapitalizado;
+    localStorage.setItem(CONSTANTES.CHAVE_NOME_USUARIO, nomeCapitalizado);
+    this.atualizar();
+    return true;
+  },
+
+  atualizar() {
+    elementos.nomeUsuario.textContent = this.nomeAtual ? `d${this.nomeAtual.startsWith('o') || this.nomeAtual.startsWith('O') ? 'o' : 'a'} ${this.nomeAtual}` : "";
+  },
+
+  mostrarModal() {
+    elementos.modal.classList.add("visivel");
+    elementos.inputNome.value = this.nomeAtual;
+    elementos.inputNome.focus();
+  },
+
+  esconderModal() {
+    elementos.modal.classList.remove("visivel");
+  },
+
+  inicializar() {
+    if (!this.nomeAtual) {
+      this.mostrarModal();
+    } else {
+      this.atualizar();
+    }
+
+    elementos.botaoSalvarNome.addEventListener("click", () => {
+      const novoNome = elementos.inputNome.value;
+      if (this.salvar(novoNome)) {
+        this.esconderModal();
+        Notificacao.mostrar("Nome salvo com sucesso!");
+      } else {
+        Notificacao.mostrar("Por favor, digite um nome válido", "erro");
+      }
+    });
+
+    elementos.inputNome.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter") {
+        elementos.botaoSalvarNome.click();
+      }
+    });
+
+    elementos.botaoEditarNome.addEventListener("click", () => {
+      this.mostrarModal();
+    });
+  },
+};
+
 // ===== GERENCIAMENTO DE EVENTOS =====
 const Eventos = {
   inicializar() {
@@ -204,6 +274,7 @@ const Eventos = {
     window.addEventListener("scroll", () => this.verificarScroll());
     window.addEventListener("load", () => this.carregarLista());
     GerenciadorTema.inicializar();
+    GerenciadorNome.inicializar();
   },
 
   adicionarItem() {

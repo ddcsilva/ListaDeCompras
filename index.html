@@ -9,9 +9,33 @@
     <link rel="icon" href="favicon.png" type="image/png" />
   </head>
   <body>
+      <div id="modal-nome" class="modal">
+      <div class="modal-conteudo">
+        <h2 class="modal-titulo">Bem-vindo(a) à sua Lista de Compras! 🛒</h2>
+        <p class="modal-descricao">Como você gostaria de ser chamado(a)?</p>
+        <div class="modal-input-grupo">
+          <input
+            type="text"
+            id="input-nome"
+            class="campo-texto campo-texto--nome"
+            placeholder="Digite seu nome..."
+            maxlength="30"
+            aria-label="Digite seu nome"
+          />
+          <button id="btn-salvar-nome" class="botao">Salvar</button>
+        </div>
+      </div>
+    </div>
+
     <main class="container-principal">
       <header class="cabecalho">
-        <h1 class="titulo-principal">🛒 Lista de Compras do Danilo</h1>
+        <h1 class="titulo-principal">
+          🛒 Lista de Compras
+          <span id="nome-usuario"></span>
+          <button id="btn-editar-nome" class="botao-editar-nome" aria-label="Editar nome" title="Editar nome">
+            ✏️
+          </button>
+        </h1>
       </header>
 
       <button id="btn-tema" class="botao-tema" aria-label="Alternar tema" title="Alternar tema">
@@ -59,7 +83,7 @@
         <button id="btn-limpar" class="botao botao-limpar" aria-label="Limpar toda a lista">Limpar Tudo</button>
       </footer>
 
-      <button id="btn-topo" class="botao botao-topo" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>image.png
+      <button id="btn-topo" class="botao botao-topo" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
     </main>
 
     <script src="script.js"></script>

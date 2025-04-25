@@ -524,3 +524,107 @@ body {
 .botao-tema:hover {
   background-color: var(--cor-sombra);
 }
+
+/* ===== MODAL ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--velocidade-transicao) ease;
+}
+
+.modal.visivel {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-conteudo {
+  background-color: var(--cor-fundo-container);
+  padding: var(--espacamento-grande);
+  border-radius: var(--raio-borda);
+  box-shadow: 0 4px 20px var(--cor-sombra);
+  max-width: 400px;
+  width: 90%;
+  transform: translateY(-20px);
+  transition: transform var(--velocidade-transicao) ease;
+}
+
+.modal.visivel .modal-conteudo {
+  transform: translateY(0);
+}
+
+.modal-titulo {
+  color: var(--cor-texto);
+  font-size: 24px;
+  margin-bottom: var(--espacamento-medio);
+  text-align: center;
+}
+
+.modal-descricao {
+  color: var(--cor-texto);
+  margin-bottom: var(--espacamento-medio);
+  text-align: center;
+}
+
+.modal-input-grupo {
+  display: flex;
+  gap: var(--espacamento-pequeno);
+}
+
+.campo-texto--nome {
+  flex: 1;
+}
+
+/* ===== TÍTULO E BOTÃO DE EDIÇÃO ===== */
+.titulo-principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacamento-pequeno);
+}
+
+#nome-usuario {
+  font-weight: 600;
+  color: var(--cor-primaria);
+}
+
+.botao-editar-nome {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--velocidade-transicao) ease;
+}
+
+.botao-editar-nome:hover {
+  opacity: 1;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .modal-conteudo {
+    padding: var(--espacamento-medio);
+  }
+
+  .modal-titulo {
+    font-size: 20px;
+  }
+
+  .modal-input-grupo {
+    flex-direction: column;
+  }
+
+  .botao-editar-nome {
+    font-size: 14px;
+  }
+}
