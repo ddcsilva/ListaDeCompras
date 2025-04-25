@@ -4,6 +4,7 @@ const CONSTANTES = {
   TEMPO_NOTIFICACAO: 3000,
   CHAVE_LOCAL_STORAGE: "listaDeCompras",
   LIMITE_SCROLL: 300, // Distância em pixels para mostrar o botão
+  CHAVE_TEMA: "temaListaCompras",
 };
 
 // ===== SELEÇÃO DE ELEMENTOS =====
@@ -16,6 +17,8 @@ const elementos = {
   totalItens: document.querySelector("#total-itens"),
   itensComprados: document.querySelector("#itens-comprados"),
   botaoTopo: document.querySelector("#btn-topo"),
+  botaoTema: document.querySelector("#btn-tema"),
+  iconeTema: document.querySelector("#icone-tema"),
 };
 
 // ===== GERENCIAMENTO DE NOTIFICAÇÕES =====
@@ -168,6 +171,28 @@ const GerenciadorItens = {
   },
 };
 
+// ===== GERENCIAMENTO DE TEMA =====
+const GerenciadorTema = {
+  temaAtual: localStorage.getItem(CONSTANTES.CHAVE_TEMA) || "claro",
+
+  alternar() {
+    this.temaAtual = this.temaAtual === "claro" ? "escuro" : "claro";
+    document.documentElement.setAttribute("data-tema", this.temaAtual);
+    localStorage.setItem(CONSTANTES.CHAVE_TEMA, this.temaAtual);
+    this.atualizarIcone();
+  },
+
+  atualizarIcone() {
+    elementos.iconeTema.textContent = this.temaAtual === "claro" ? "🌙" : "☀️";
+  },
+
+  inicializar() {
+    document.documentElement.setAttribute("data-tema", this.temaAtual);
+    this.atualizarIcone();
+    elementos.botaoTema.addEventListener("click", () => this.alternar());
+  },
+};
+
 // ===== GERENCIAMENTO DE EVENTOS =====
 const Eventos = {
   inicializar() {
@@ -178,6 +203,7 @@ const Eventos = {
     elementos.botaoTopo.addEventListener("click", () => this.voltarAoTopo());
     window.addEventListener("scroll", () => this.verificarScroll());
     window.addEventListener("load", () => this.carregarLista());
+    GerenciadorTema.inicializar();
   },
 
   adicionarItem() {

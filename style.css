@@ -1,6 +1,6 @@
 /* ===== VARIÁVEIS ===== */
 :root {
-  /* Cores */
+  /* Cores - Tema Claro */
   --cor-primaria: #007bff;
   --cor-secundaria: #0056b3;
   --cor-perigo: #dc3545;
@@ -12,6 +12,10 @@
   --cor-sombra: rgba(0, 0, 0, 0.1);
   --cor-item-comprado: #e9ecef;
   --cor-texto-comprado: #6c757d;
+  --cor-fundo-container: #ffffff;
+  --cor-fundo-item: #f4f4f4;
+  --cor-fundo-botao-topo: #007bff;
+  --cor-fundo-botao-topo-hover: #0056b3;
   
   /* Espaçamentos */
   --espacamento-pequeno: 10px;
@@ -31,15 +35,38 @@
   --largura-quantidade: 80px;
 }
 
+/* Tema Escuro */
+[data-tema="escuro"] {
+  --cor-primaria: #0d6efd;
+  --cor-secundaria: #0a58ca;
+  --cor-perigo: #dc3545;
+  --cor-perigo-hover: #bb2d3b;
+  --cor-sucesso: #198754;
+  --cor-texto: #e9ecef;
+  --cor-fundo: #212529;
+  --cor-borda: #495057;
+  --cor-sombra: rgba(0, 0, 0, 0.3);
+  --cor-item-comprado: #343a40;
+  --cor-texto-comprado: #adb5bd;
+  --cor-fundo-container: #2b3035;
+  --cor-fundo-item: #343a40;
+  --cor-fundo-botao-topo: #0d6efd;
+  --cor-fundo-botao-topo-hover: #0a58ca;
+}
+
 /* ===== RESET E ESTILOS BASE ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: background-color var(--velocidade-transicao) ease,
+              color var(--velocidade-transicao) ease,
+              border-color var(--velocidade-transicao) ease;
 }
 
 body {
   background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   display: flex;
@@ -52,7 +79,7 @@ body {
 .container-principal {
   width: 100%;
   max-width: var(--largura-maxima);
-  background-color: white;
+  background-color: var(--cor-fundo-container);
   padding: var(--espacamento-grande);
   border-radius: var(--raio-borda);
   box-shadow: 0 2px 10px var(--cor-sombra);
@@ -363,4 +390,27 @@ body {
 
 .botao-topo:hover {
   background-color: var(--cor-secundaria);
+}
+
+/* ===== BOTÃO TEMA ===== */
+.botao-tema {
+  position: fixed;
+  top: var(--espacamento-medio);
+  right: var(--espacamento-medio);
+  background: none;
+  border: none;
+  color: var(--cor-texto);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: background-color var(--velocidade-transicao) ease;
+}
+
+.botao-tema:hover {
+  background-color: var(--cor-sombra);
 }
