@@ -193,6 +193,7 @@ body {
   cursor: pointer;
   transition: color var(--velocidade-transicao) ease;
   height: auto;
+  flex-shrink: 0;
 }
 
 .botao-remover:hover {
@@ -202,6 +203,7 @@ body {
 /* ===== LISTA DE ITENS ===== */
 .secao-lista {
   width: 100%;
+  padding: 0 var(--espacamento-pequeno);
 }
 
 .lista-itens {
@@ -212,9 +214,9 @@ body {
 }
 
 .lista-itens__item {
-  background-color: var(--cor-fundo);
-  height: var(--altura-input);
-  padding: 0 var(--espacamento-medio);
+  background-color: var(--cor-fundo-item);
+  min-height: var(--altura-input);
+  padding: var(--espacamento-pequeno) var(--espacamento-medio);
   margin-bottom: var(--espacamento-pequeno);
   border-radius: var(--raio-borda);
   color: var(--cor-texto);
@@ -237,6 +239,7 @@ body {
   height: 20px;
   cursor: pointer;
   accent-color: var(--cor-sucesso);
+  flex-shrink: 0;
 }
 
 .lista-itens__conteudo {
@@ -244,6 +247,7 @@ body {
   display: flex;
   align-items: center;
   gap: var(--espacamento-pequeno);
+  min-width: 0; /* Permite que o texto quebre corretamente */
 }
 
 .lista-itens__texto {
@@ -251,6 +255,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0; /* Permite que o texto quebre corretamente */
 }
 
 .lista-itens__quantidade {
@@ -261,6 +266,7 @@ body {
   border-radius: var(--raio-borda-pequeno);
   min-width: 45px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .lista-itens__item--comprado {
@@ -375,13 +381,18 @@ body {
   }
 
   .lista-itens__conteudo {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: var(--espacamento-pequeno);
   }
 
+  .lista-itens__texto {
+    white-space: normal;
+    word-break: break-word;
+  }
+
   .lista-itens__quantidade {
-    align-self: flex-start;
+    margin-left: auto;
   }
 
   .botao-tema {
@@ -416,12 +427,23 @@ body {
     font-size: 14px;
   }
 
+  .lista-itens__item {
+    padding: 8px;
+  }
+
   .lista-itens__texto {
     font-size: 14px;
+    line-height: 1.4;
   }
 
   .lista-itens__quantidade {
     font-size: 12px;
+    padding: 2px 6px;
+  }
+
+  .botao-remover {
+    font-size: 16px;
+    padding: 2px 6px;
   }
 }
 
