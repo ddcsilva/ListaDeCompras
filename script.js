@@ -131,7 +131,7 @@ const GerenciadorItens = {
     const comprados = elementos.lista.querySelectorAll(".lista-itens__item--comprado").length;
     
     elementos.totalItens.textContent = `${total} ${total === 1 ? 'item' : 'itens'}`;
-    elementos.itensComprados.textContent = `${comprados} comprado${comprados !== 1 ? 's' : ''}`;
+    elementos.itensComprados.textContent = `${comprados} ${comprados === 1 ? 'comprado' : 'comprados'}`;
   },
 
   adicionar(texto, quantidade, comprado = false) {
@@ -199,7 +199,7 @@ const Eventos = {
     elementos.botaoAdicionar.addEventListener("click", () => this.adicionarItem());
     elementos.input.addEventListener("keydown", (evento) => this.teclaEnter(evento));
     elementos.inputQuantidade.addEventListener("keydown", (evento) => this.teclaEnter(evento));
-    elementos.botaoLimpar.addEventListener("click", GerenciadorItens.limpar);
+    elementos.botaoLimpar.addEventListener("click", () => GerenciadorItens.limpar());
     elementos.botaoTopo.addEventListener("click", () => this.voltarAoTopo());
     window.addEventListener("scroll", () => this.verificarScroll());
     window.addEventListener("load", () => this.carregarLista());
