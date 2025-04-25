@@ -92,6 +92,18 @@
       <button id="btn-topo" class="botao botao-topo" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
     </main>
 
+    <!-- Modal de Confirmação -->
+    <div id="modal-confirmacao" class="modal-confirmacao" role="dialog" aria-labelledby="modal-confirmacao-titulo">
+      <div class="modal-confirmacao__conteudo">
+        <h2 id="modal-confirmacao-titulo" class="modal-confirmacao__titulo">Limpar Lista</h2>
+        <p class="modal-confirmacao__mensagem">Tem certeza que deseja limpar toda a lista?</p>
+        <div class="modal-confirmacao__botoes">
+          <button id="btn-confirmar-limpar" class="modal-confirmacao__botao modal-confirmacao__botao--confirmar">Limpar Tudo</button>
+          <button id="btn-cancelar-limpar" class="modal-confirmacao__botao modal-confirmacao__botao--cancelar">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       // Adiciona timestamp para evitar cache
       document.addEventListener('DOMContentLoaded', function() {
@@ -104,6 +116,6 @@
         });
       });
     </script>
-    <script src="script.js?v=1.0.0"></script>
+    <script src="script.js?v=1.2.0"></script>
   </body>
 </html>

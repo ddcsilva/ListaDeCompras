@@ -26,6 +26,9 @@ const elementos = {
   botaoSalvarNome: document.querySelector("#btn-salvar-nome"),
   nomeUsuario: document.querySelector("#nome-usuario"),
   botaoEditarNome: document.querySelector("#btn-editar-nome"),
+  modalConfirmacao: document.querySelector("#modal-confirmacao"),
+  botaoConfirmarLimpar: document.querySelector("#btn-confirmar-limpar"),
+  botaoCancelarLimpar: document.querySelector("#btn-cancelar-limpar"),
 };
 
 // ===== GERENCIAMENTO DE NOTIFICAÇÕES =====
@@ -141,7 +144,7 @@ const GerenciadorItens = {
     elementos.itensComprados.textContent = `${comprados} ${comprados === 1 ? 'comprado' : 'comprados'}`;
   },
 
-  adicionar(texto, quantidade, comprado = false) {
+  adicionar(texto, quantidade, comprado = false, exibirNotificacao = true) {
     if (!Validacao.item(texto) || !Validacao.quantidade(quantidade)) return;
 
     // Verifica se o item já existe na lista (ignorando maiúsculas/minúsculas)
@@ -149,7 +152,9 @@ const GerenciadorItens = {
       .some(item => item.textContent.toLowerCase() === texto.toLowerCase());
 
     if (itemExistente) {
-      Notificacao.mostrar("Este item já está na lista!", "erro");
+      if (exibirNotificacao) {
+        Notificacao.mostrar("Este item já está na lista!", "erro");
+      }
       return;
     }
 
@@ -165,25 +170,40 @@ const GerenciadorItens = {
       elementos.lista.removeChild(elemento);
       Armazenamento.salvar();
       this.atualizarContadores();
-      Notificacao.mostrar("Item removido com sucesso");
+      if (exibirNotificacao) {
+        Notificacao.mostrar("Item removido com sucesso");
+      }
     });
 
     elementos.lista.appendChild(elemento);
     Armazenamento.salvar();
     this.atualizarContadores();
-    Notificacao.mostrar("Item adicionado com sucesso");
+    if (exibirNotificacao) {
+      Notificacao.mostrar("Item adicionado com sucesso");
+    }
   },
 
   limpar() {
     if (elementos.lista.children.length > 0) {
-      if (confirm("Tem certeza que deseja limpar toda a lista?")) {
-        elementos.lista.innerHTML = "";
-        Armazenamento.limpar();
-        Armazenamento.salvar();
-        this.atualizarContadores();
-        Notificacao.mostrar("Lista limpa com sucesso");
-      }
+      this.mostrarModalConfirmacao();
     }
+  },
+
+  mostrarModalConfirmacao() {
+    elementos.modalConfirmacao.classList.add("visivel");
+  },
+
+  esconderModalConfirmacao() {
+    elementos.modalConfirmacao.classList.remove("visivel");
+  },
+
+  limparConfirmado() {
+    elementos.lista.innerHTML = "";
+    Armazenamento.limpar();
+    Armazenamento.salvar();
+    this.atualizarContadores();
+    this.esconderModalConfirmacao();
+    Notificacao.mostrar("Lista limpa com sucesso");
   },
 };
 
@@ -368,6 +388,28 @@ const Eventos = {
     elementos.botaoTopo.addEventListener("click", () => this.voltarAoTopo());
     window.addEventListener("scroll", () => this.verificarScroll());
     window.addEventListener("load", () => this.carregarLista());
+
+    // Eventos do modal de confirmação
+    elementos.botaoConfirmarLimpar.addEventListener("click", () => {
+      GerenciadorItens.limparConfirmado();
+    });
+
+    elementos.botaoCancelarLimpar.addEventListener("click", () => {
+      GerenciadorItens.esconderModalConfirmacao();
+    });
+
+    elementos.modalConfirmacao.addEventListener("click", (evento) => {
+      if (evento.target === elementos.modalConfirmacao) {
+        GerenciadorItens.esconderModalConfirmacao();
+      }
+    });
+
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && elementos.modalConfirmacao.classList.contains("visivel")) {
+        GerenciadorItens.esconderModalConfirmacao();
+      }
+    });
+
     GerenciadorTema.inicializar();
     GerenciadorNome.inicializar();
   },
@@ -399,17 +441,14 @@ const Eventos = {
   },
 
   verificarScroll() {
-    if (window.scrollY > CONSTANTES.LIMITE_SCROLL) {
-      elementos.botaoTopo.classList.add("visivel");
-    } else {
-      elementos.botaoTopo.classList.remove("visivel");
-    }
+    const mostrarBotao = window.scrollY > CONSTANTES.LIMITE_SCROLL;
+    elementos.botaoTopo.classList.toggle("visivel", mostrarBotao);
   },
 
   carregarLista() {
     const itensSalvos = Armazenamento.carregar();
     itensSalvos.forEach((item) => {
-      GerenciadorItens.adicionar(item.texto, item.quantidade, item.comprado);
+      GerenciadorItens.adicionar(item.texto, item.quantidade, item.comprado, false);
     });
 
     GerenciadorItens.atualizarContadores();
