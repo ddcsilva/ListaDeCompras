@@ -214,9 +214,51 @@ const GerenciadorNome = {
   },
 
   formatarPreposicao(nome) {
-    const primeiraLetra = nome.charAt(0).toLowerCase();
-    const vogais = ['a', 'e', 'i', 'o', 'u', 'y'];
-    return vogais.includes(primeiraLetra) ? 'd' + primeiraLetra : 'de';
+    // Lista de nomes femininos comuns que terminam em 'o' (exceções)
+    const excecoesFemininas = ['margo', 'theo'];
+    
+    // Nomes que devem usar 'de' (começam com artigo)
+    const comecaComArtigo = nome.toLowerCase().startsWith('o ') || nome.toLowerCase().startsWith('a ');
+    if (comecaComArtigo) {
+      return 'de';
+    }
+
+    const nomeLower = nome.toLowerCase();
+    
+    // Verifica exceções femininas
+    if (excecoesFemininas.includes(nomeLower)) {
+      return 'da';
+    }
+    
+    // Regra geral: nomes terminados em 'a' são femininos (da)
+    // Nomes terminados em 'o' são masculinos (do)
+    // Outros casos usam 'de'
+    const ultimaLetra = nomeLower.charAt(nomeLower.length - 1);
+    
+    if (ultimaLetra === 'a') {
+      return 'da';
+    } else if (ultimaLetra === 'o') {
+      return 'do';
+    }
+    
+    // Para outros casos, vamos usar uma lista de terminações comuns
+    const terminacoesFemininas = ['ice', 'ise', 'ize', 'is', 'id', 'ain', 'een', 'een'];
+    const terminacoesMasculinas = ['or', 'eu', 'us', 'un', 'im', 'el'];
+    
+    for (const terminacao of terminacoesFemininas) {
+      if (nomeLower.endsWith(terminacao)) {
+        return 'da';
+      }
+    }
+    
+    for (const terminacao of terminacoesMasculinas) {
+      if (nomeLower.endsWith(terminacao)) {
+        return 'do';
+      }
+    }
+    
+    // Caso não encontre um padrão claro, usa 'de'
+    return 'de';
   },
 
   salvar(nome) {
