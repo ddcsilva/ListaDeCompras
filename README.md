@@ -1,10 +1,10 @@
 # 🛒 Lista de Compras
 
-🔗 [Acesse a Lista de Compras Online](https://seu-usuario.github.io/lista-de-compras/)
-
 ![Versão](https://img.shields.io/badge/versão-1.0.0-blue)
 ![Licença](https://img.shields.io/badge/licença-MIT-green)
 ![Status](https://img.shields.io/badge/status-concluído-success)
+
+🔗 [Acesse a Lista de Compras Online](https://ddcsilva.github.io/ListaDeCompras/)
 
 Uma aplicação web moderna e responsiva para gerenciar sua lista de compras do dia a dia. Desenvolvida com HTML, CSS e JavaScript puro.
 
