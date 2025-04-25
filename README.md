@@ -1,5 +1,7 @@
 # 🛒 Lista de Compras
 
+🔗 [Acesse a Lista de Compras Online](https://seu-usuario.github.io/lista-de-compras/)
+
 ![Versão](https://img.shields.io/badge/versão-1.0.0-blue)
 ![Licença](https://img.shields.io/badge/licença-MIT-green)
 ![Status](https://img.shields.io/badge/status-concluído-success)
@@ -84,8 +86,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Danilo** - [Seu GitHub](https://github.com/seu-usuario)
-
----
-
-Feito com ❤️ por Danilo 
+**Danilo** - [Seu GitHub](https://www.linkedin.com/in/ddcsilva/)
