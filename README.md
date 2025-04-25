@@ -7,7 +7,7 @@
 
 🔗 [Acesse a Lista de Compras Online](https://ddcsilva.github.io/ListaDeCompras/)
 
-Uma aplicação web moderna e responsiva para gerenciar sua lista de compras do dia a dia. Desenvolvida com HTML, CSS e JavaScript puro.
+Uma aplicação web moderna e responsiva para gerenciar sua lista de compras do dia a dia. Desenvolvida com HTML, CSS e JavaScript puro, focando em uma experiência de usuário intuitiva e acessível.
 
 ![Preview da Aplicação](preview.png)
 
@@ -23,72 +23,120 @@ O workflow de deploy:
 
 ## ✨ Funcionalidades
 
+### Gerenciamento de Lista
 - ✅ Adicionar itens com quantidade
 - ✅ Marcar itens como comprados
 - ✅ Remover itens individualmente
 - ✅ Limpar toda a lista
-- 🌙 Tema escuro/claro
-- 📱 Design responsivo
-- 💾 Salvamento automático
+- 📊 Contador de itens e comprados
+
+### Personalização
+- 👤 Nome personalizável com modal de boas-vindas
+- 🎨 Tema escuro/claro
+- 💾 Salvamento automático de preferências
+- ⚙️ Configurações acessíveis no topo
+
+### Interface
+- 📱 Design totalmente responsivo
 - 🔝 Botão "Voltar ao topo"
-- 📊 Contador de itens
+- 🌟 Animações e transições suaves
+- 🎯 Feedback visual em todas as ações
+
+## 🎨 Design e UX
+
+### Personalização de Usuário
+- Modal elegante de boas-vindas na primeira visita
+- Nome personalizado no título da lista
+- Formatação inteligente (ex: "do João", "da Maria")
+- Edição posterior através do botão de configurações
+- Animações suaves nas interações
+
+### Temas
+- Alternância entre tema claro e escuro
+- Transições suaves entre temas
+- Persistência da preferência do usuário
+- Interface adaptativa em ambos os temas
+
+### Acessibilidade
+- Navegação completa por teclado
+- Suporte a leitores de tela
+- Contraste adequado em ambos os temas
+- Feedback visual e textual claro
 
 ## 🚀 Tecnologias Utilizadas
 
-- HTML5
+### Frontend
+- HTML5 Semântico
 - CSS3
   - Variáveis CSS
   - Flexbox
+  - Grid
   - Media Queries
-  - Transições e Animações
+  - Animações e Transições
 - JavaScript (ES6+)
   - LocalStorage
   - Event Listeners
   - Manipulação do DOM
 
-## 🎨 Interface
+### Armazenamento
+- LocalStorage para dados da lista
+- Persistência de preferências do usuário
+- Salvamento automático de alterações
 
-A aplicação possui uma interface limpa e intuitiva:
-
-- **Cabeçalho**: Título da aplicação
-- **Seção de Adição**: Campo para adicionar novos itens com quantidade
-- **Lista de Itens**: Exibe todos os itens com opções de marcar como comprado e remover
-- **Rodapé**: Botão para limpar toda a lista
-- **Botão de Tema**: Alterna entre tema claro e escuro
-- **Botão "Voltar ao Topo"**: Aparece ao rolar a página
+### Deploy
+- GitHub Pages
+- GitHub Actions para deploy automático
+- Integração Contínua
 
 ## 🎯 Como Usar
 
-1. Abra o arquivo `index.html` em seu navegador
-2. Digite o nome do item no campo de texto
-3. Ajuste a quantidade desejada
-4. Clique em "Adicionar" ou pressione Enter
-5. Marque os itens como comprados clicando no checkbox
-6. Remova itens clicando no botão ✖
-7. Use o botão de tema 🌙/☀️ para alternar entre temas
-8. O botão "Voltar ao Topo" ↑ aparece ao rolar a página
+1. Acesse a aplicação pela primeira vez
+2. Personalize seu nome no modal de boas-vindas
+3. Adicione itens à sua lista:
+   - Digite o nome do item
+   - Ajuste a quantidade
+   - Clique em "Adicionar" ou pressione Enter
+4. Gerencie seus itens:
+   - Marque como comprados
+   - Remova individualmente
+   - Use "Limpar Tudo" para recomeçar
+5. Personalize sua experiência:
+   - Alterne entre temas com 🌙/☀️
+   - Edite seu nome com ⚙️
+   - Use o botão ↑ para voltar ao topo
 
-## 💾 Armazenamento
+## 💾 Armazenamento Local
 
-- Todos os dados são salvos automaticamente no `localStorage` do navegador
-- A lista persiste mesmo após fechar o navegador
-- O tema escolhido também é salvo
+- Lista de itens
+- Nome do usuário
+- Preferência de tema
+- Todos os dados persistem entre sessões
 
 ## 📱 Responsividade
 
-A aplicação é totalmente responsiva e funciona bem em:
-- Desktop
-- Tablet
-- Smartphone
+A aplicação é totalmente responsiva e otimizada para:
+- 🖥️ Desktop
+- 💻 Tablet
+- 📱 Smartphone
+- Orientações retrato e paisagem
 
 ## 🛠️ Desenvolvimento
 
 Para contribuir com o projeto:
 
 1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
+2. Crie uma branch para sua feature
+   ```bash
+   git checkout -b feature/nova-feature
+   ```
+3. Commit suas mudanças
+   ```bash
+   git commit -m 'Adiciona nova feature'
+   ```
+4. Push para a branch
+   ```bash
+   git push origin feature/nova-feature
+   ```
 5. Abra um Pull Request
 
 ## 📝 Licença
@@ -97,4 +145,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Danilo** - [Seu GitHub](https://www.linkedin.com/in/ddcsilva/)
+**Danilo** - [LinkedIn](https://www.linkedin.com/in/ddcsilva/)
+
+---
+
+Feito com ❤️ por Danilo
