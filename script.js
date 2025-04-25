@@ -6,6 +6,7 @@ const CONSTANTES = {
   CHAVE_TEMA: "temaListaCompras",
   CHAVE_NOME_USUARIO: "nomeUsuarioListaCompras",
   LIMITE_SCROLL: 300,
+  DELAY_ANIMACAO: 100,
 };
 
 // ===== SELEÇÃO DE ELEMENTOS =====
@@ -207,13 +208,26 @@ const GerenciadorNome = {
     return nome
       .trim()
       .toLowerCase()
-      .replace(/(?:^|\s)\S/g, (letra) => letra.toUpperCase());
+      .split(' ')
+      .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+      .join(' ');
+  },
+
+  formatarPreposicao(nome) {
+    const primeiraLetra = nome.charAt(0).toLowerCase();
+    const vogais = ['a', 'e', 'i', 'o', 'u', 'y'];
+    return vogais.includes(primeiraLetra) ? 'd' + primeiraLetra : 'de';
   },
 
   salvar(nome) {
-    if (!nome.trim()) return false;
+    const nomeFormatado = nome.trim();
+    if (!nomeFormatado) {
+      elementos.inputNome.classList.add('erro');
+      setTimeout(() => elementos.inputNome.classList.remove('erro'), 820);
+      return false;
+    }
     
-    const nomeCapitalizado = this.capitalizar(nome);
+    const nomeCapitalizado = this.capitalizar(nomeFormatado);
     this.nomeAtual = nomeCapitalizado;
     localStorage.setItem(CONSTANTES.CHAVE_NOME_USUARIO, nomeCapitalizado);
     this.atualizar();
@@ -221,22 +235,35 @@ const GerenciadorNome = {
   },
 
   atualizar() {
-    elementos.nomeUsuario.textContent = this.nomeAtual ? `d${this.nomeAtual.startsWith('o') || this.nomeAtual.startsWith('O') ? 'o' : 'a'} ${this.nomeAtual}` : "";
+    if (!this.nomeAtual) {
+      elementos.nomeUsuario.textContent = "";
+      return;
+    }
+
+    const preposicao = this.formatarPreposicao(this.nomeAtual);
+    elementos.nomeUsuario.textContent = `${preposicao} ${this.nomeAtual}`;
+    
+    // Anima o nome ao atualizar
+    elementos.nomeUsuario.style.opacity = '0';
+    setTimeout(() => {
+      elementos.nomeUsuario.style.opacity = '1';
+      elementos.nomeUsuario.style.transform = 'translateY(0)';
+    }, CONSTANTES.DELAY_ANIMACAO);
   },
 
   mostrarModal() {
     elementos.modal.classList.add("visivel");
-    elementos.inputNome.value = this.nomeAtual;
-    elementos.inputNome.focus();
+    setTimeout(() => elementos.inputNome.focus(), CONSTANTES.DELAY_ANIMACAO);
   },
 
   esconderModal() {
     elementos.modal.classList.remove("visivel");
+    elementos.inputNome.value = "";
   },
 
   inicializar() {
     if (!this.nomeAtual) {
-      this.mostrarModal();
+      setTimeout(() => this.mostrarModal(), CONSTANTES.DELAY_ANIMACAO);
     } else {
       this.atualizar();
     }
@@ -245,9 +272,7 @@ const GerenciadorNome = {
       const novoNome = elementos.inputNome.value;
       if (this.salvar(novoNome)) {
         this.esconderModal();
-        Notificacao.mostrar("Nome salvo com sucesso!");
-      } else {
-        Notificacao.mostrar("Por favor, digite um nome válido", "erro");
+        Notificacao.mostrar("Nome salvo com sucesso! 👋");
       }
     });
 
@@ -257,8 +282,27 @@ const GerenciadorNome = {
       }
     });
 
+    elementos.inputNome.addEventListener("input", () => {
+      elementos.inputNome.classList.remove('erro');
+    });
+
     elementos.botaoEditarNome.addEventListener("click", () => {
+      elementos.inputNome.value = this.nomeAtual;
       this.mostrarModal();
+    });
+
+    // Fecha o modal ao clicar fora
+    elementos.modal.addEventListener("click", (evento) => {
+      if (evento.target === elementos.modal) {
+        this.esconderModal();
+      }
+    });
+
+    // Fecha o modal com ESC
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && elementos.modal.classList.contains("visivel")) {
+        this.esconderModal();
+      }
     });
   },
 };

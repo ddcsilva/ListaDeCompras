@@ -9,9 +9,9 @@
     <link rel="icon" href="favicon.png" type="image/png" />
   </head>
   <body>
-      <div id="modal-nome" class="modal">
+    <div id="modal-nome" class="modal" role="dialog" aria-labelledby="modal-titulo">
       <div class="modal-conteudo">
-        <h2 class="modal-titulo">Bem-vindo(a) à sua Lista de Compras! 🛒</h2>
+        <h2 id="modal-titulo" class="modal-titulo">Bem-vindo(a) à sua Lista de Compras! 🛒</h2>
         <p class="modal-descricao">Como você gostaria de ser chamado(a)?</p>
         <div class="modal-input-grupo">
           <input
@@ -21,6 +21,7 @@
             placeholder="Digite seu nome..."
             maxlength="30"
             aria-label="Digite seu nome"
+            required
           />
           <button id="btn-salvar-nome" class="botao">Salvar</button>
         </div>
@@ -28,19 +29,21 @@
     </div>
 
     <main class="container-principal">
+      <div class="controles-fixos">
+        <button id="btn-editar-nome" class="botao-controle" aria-label="Editar nome" title="Editar nome">
+          ⚙️
+        </button>
+        <button id="btn-tema" class="botao-controle" aria-label="Alternar tema" title="Alternar tema">
+          <span id="icone-tema">🌙</span>
+        </button>
+      </div>
+
       <header class="cabecalho">
         <h1 class="titulo-principal">
           🛒 Lista de Compras
           <span id="nome-usuario"></span>
-          <button id="btn-editar-nome" class="botao-editar-nome" aria-label="Editar nome" title="Editar nome">
-            ✏️
-          </button>
         </h1>
       </header>
-
-      <button id="btn-tema" class="botao-tema" aria-label="Alternar tema" title="Alternar tema">
-        <span id="icone-tema">🌙</span>
-      </button>
 
       <section class="secao-adicionar">
         <div class="container-input">
