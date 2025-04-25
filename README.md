@@ -3,12 +3,23 @@
 ![Versão](https://img.shields.io/badge/versão-1.0.0-blue)
 ![Licença](https://img.shields.io/badge/licença-MIT-green)
 ![Status](https://img.shields.io/badge/status-concluído-success)
+![Deploy](https://github.com/ddcsilva/ListaDeCompras/actions/workflows/deploy.yml/badge.svg)
 
 🔗 [Acesse a Lista de Compras Online](https://ddcsilva.github.io/ListaDeCompras/)
 
 Uma aplicação web moderna e responsiva para gerenciar sua lista de compras do dia a dia. Desenvolvida com HTML, CSS e JavaScript puro.
 
 ![Preview da Aplicação](preview.png)
+
+## 🚀 Deploy Automático
+
+Este projeto utiliza GitHub Actions para deploy automático no GitHub Pages. Toda vez que um push é feito para a branch `main`, o site é automaticamente atualizado.
+
+O workflow de deploy:
+1. É acionado automaticamente em pushes para a branch `main`
+2. Pode ser acionado manualmente através do GitHub Actions
+3. Utiliza as últimas versões das actions do GitHub
+4. Configura as permissões necessárias para o deploy
 
 ## ✨ Funcionalidades
 
