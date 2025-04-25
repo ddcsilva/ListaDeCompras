@@ -328,3 +328,39 @@ body {
     flex: 1 1 100%;
   }
 }
+
+/* ===== CONTADOR DE ITENS ===== */
+.contador-itens {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--espacamento-pequeno);
+  color: var(--cor-texto-comprado);
+  font-size: 14px;
+}
+
+/* ===== BOTÃO VOLTAR AO TOPO ===== */
+.botao-topo {
+  position: fixed;
+  bottom: var(--espacamento-medio);
+  right: var(--espacamento-medio);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: none;
+  background-color: var(--cor-primaria);
+  color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity var(--velocidade-transicao) ease;
+}
+
+.botao-topo.visivel {
+  display: block;
+  opacity: 1;
+}
+
+.botao-topo:hover {
+  background-color: var(--cor-secundaria);
+}

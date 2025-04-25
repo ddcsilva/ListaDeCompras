@@ -3,6 +3,7 @@ const CONSTANTES = {
   TAMANHO_MAXIMO_ITEM: 50,
   TEMPO_NOTIFICACAO: 3000,
   CHAVE_LOCAL_STORAGE: "listaDeCompras",
+  LIMITE_SCROLL: 300, // Distância em pixels para mostrar o botão
 };
 
 // ===== SELEÇÃO DE ELEMENTOS =====
@@ -12,6 +13,9 @@ const elementos = {
   botaoAdicionar: document.querySelector("#btn-adicionar"),
   lista: document.querySelector("#lista-compras"),
   botaoLimpar: document.querySelector("#btn-limpar"),
+  totalItens: document.querySelector("#total-itens"),
+  itensComprados: document.querySelector("#itens-comprados"),
+  botaoTopo: document.querySelector("#btn-topo"),
 };
 
 // ===== GERENCIAMENTO DE NOTIFICAÇÕES =====
@@ -119,6 +123,14 @@ const GerenciadorItens = {
     return { elemento: item, checkbox, botaoRemover };
   },
 
+  atualizarContadores() {
+    const total = elementos.lista.children.length;
+    const comprados = elementos.lista.querySelectorAll(".lista-itens__item--comprado").length;
+    
+    elementos.totalItens.textContent = `${total} ${total === 1 ? 'item' : 'itens'}`;
+    elementos.itensComprados.textContent = `${comprados} comprado${comprados !== 1 ? 's' : ''}`;
+  },
+
   adicionar(texto, quantidade, comprado = false) {
     if (!Validacao.item(texto) || !Validacao.quantidade(quantidade)) return;
 
@@ -127,16 +139,19 @@ const GerenciadorItens = {
     checkbox.addEventListener("change", () => {
       elemento.classList.toggle("lista-itens__item--comprado", checkbox.checked);
       Armazenamento.salvar();
+      this.atualizarContadores();
     });
 
     botaoRemover.addEventListener("click", () => {
       elementos.lista.removeChild(elemento);
       Armazenamento.salvar();
+      this.atualizarContadores();
       Notificacao.mostrar("Item removido com sucesso");
     });
 
     elementos.lista.appendChild(elemento);
     Armazenamento.salvar();
+    this.atualizarContadores();
     Notificacao.mostrar("Item adicionado com sucesso");
   },
 
@@ -146,6 +161,7 @@ const GerenciadorItens = {
         elementos.lista.innerHTML = "";
         Armazenamento.limpar();
         Armazenamento.salvar();
+        this.atualizarContadores();
         Notificacao.mostrar("Lista limpa com sucesso");
       }
     }
@@ -159,6 +175,8 @@ const Eventos = {
     elementos.input.addEventListener("keydown", (evento) => this.teclaEnter(evento));
     elementos.inputQuantidade.addEventListener("keydown", (evento) => this.teclaEnter(evento));
     elementos.botaoLimpar.addEventListener("click", GerenciadorItens.limpar);
+    elementos.botaoTopo.addEventListener("click", () => this.voltarAoTopo());
+    window.addEventListener("scroll", () => this.verificarScroll());
     window.addEventListener("load", () => this.carregarLista());
   },
 
@@ -181,12 +199,28 @@ const Eventos = {
     }
   },
 
+  voltarAoTopo() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },
+
+  verificarScroll() {
+    if (window.scrollY > CONSTANTES.LIMITE_SCROLL) {
+      elementos.botaoTopo.classList.add("visivel");
+    } else {
+      elementos.botaoTopo.classList.remove("visivel");
+    }
+  },
+
   carregarLista() {
     const itensSalvos = Armazenamento.carregar();
     itensSalvos.forEach((item) => {
       GerenciadorItens.adicionar(item.texto, item.quantidade, item.comprado);
     });
 
+    GerenciadorItens.atualizarContadores();
     elementos.input.focus();
   },
 };
